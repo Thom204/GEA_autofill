@@ -8,7 +8,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 
-def fill(vars, Eid):
+def fill(vars, tipoTuroria, Eid):
     try:
         # Configurar Edge para evitar iniciar sesión
         options = Options()
@@ -46,19 +46,30 @@ def fill(vars, Eid):
         time.sleep(1)
 
         # 5. Seleccionar actividad
-        actividad = driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div/span/div/div[2]/label/div/div[2]/div/span')
+        if tipoTuroria == 'Tutoria abierta':
+            Xpath = '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div/span/div/div[2]/label/div/div[2]/div/span'
+        elif tipoTuroria == 'Tutoria con cita':
+            Xpath = '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div/span/div/div[1]/label/div/div[2]/div/span'
+        elif tipoTuroria== 'taller':
+            Xpath = '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[5]/div/div/div[2]/div/div/span/div/div[3]/label/div/div[2]/div/span'
+        else:
+            raise Exception("seleccionar actividad")
+
+
+        actividad = driver.find_element(By.XPATH, Xpath)
         actividad.click()
         time.sleep(5)
 
         # 6. Enviar formulario 
         submit_button = driver.find_element(By.XPATH, '//span[contains(text(),"Enviar")]')
         submit_button.click()
-        print("✓ Formulario enviado")
+        #print("✓ Formulario enviado")
 
         time.sleep(3)
-        #driver.quit()
+        driver.quit()
+        return True
 
     except Exception as e:
         print(f"❌ Algo salió mal: {e}")
-        time.sleep(20)
         driver.quit()
+        raise e
