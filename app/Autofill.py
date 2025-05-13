@@ -65,7 +65,7 @@ def fill(vars, tipoTuroria, Eid):
         submit_button.click()
         #print("✓ Formulario enviado")
 
-        time.sleep(3)
+        time.sleep(1)
         driver.quit()
         return True
 
