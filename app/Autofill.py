@@ -12,7 +12,8 @@ def fill(vars, tipoTuroria, Eid):
     try:
         # Configurar Edge para evitar iniciar sesión
         options = Options()
-        options.add_argument("--user-data-dir=C:\\Selenium\\EdgeProfile")  # Asegúrate de que esta ruta exista
+        options.add_argument("--user-data-dir=C:\\Users\\thom1\\AppData\\Local\\Microsoft\\Edge\\User Data\\Estudio")  # Ruta al directorio de datos de usuario
+        # Nombre del perfil (puedes cambiar "Default" por el nombre de otro perfil)
         driver = webdriver.Edge(options=options)
         wait = WebDriverWait(driver, 180)
 
