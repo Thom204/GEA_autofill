@@ -1,9 +1,10 @@
 import streamlit as st
+#import regex as re
 import json
 import pandas as pd
 from time import sleep
 import get_Student_ID as GID
-import Autofill
+#import Autofill
 
 with open('vars.json', 'r') as file:
     vars = json.load(file)
@@ -31,9 +32,9 @@ try:
     id = GID.get(st.session_state.student_email)
     if id != False and st.session_state.student_email != '':
         new_df = pd.DataFrame({'correo': [st.session_state.student_email],
-                               'nombre': [GID.details(st.session_state.student_email)],
-                               'ID': [id]})
-                               
+                            'nombre': [GID.details(st.session_state.student_email)],
+                            'ID': [id]})
+                            
         st.session_state.students = pd.concat([st.session_state.students, new_df], ignore_index=True) 
         st.dataframe(st.session_state.students)
         #st.rerun()
@@ -44,9 +45,11 @@ try:
             #st.session_state.students = st.session_state.students.drop(len(st.session_state.students['ID'])).reset_index(drop = True)
 
         if st.button("Registrar todos"):
+
             try:
-                for id in st.session_state.students['ID']:
-                    Autofill.fill(vars, activity, id)
+                for id in set(st.session_state.students['ID']):
+                    st.text(set(st.session_state.students['ID']))
+            #        Autofill.fill(vars, activity, id)
                     st.success("🎉 Estudiante registrado exitosamente")
                     sleep(3)
 
